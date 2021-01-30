@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import ThreatModelPresenter from "../ThreatModels/ThreatModelPresenter";
-import CountriesPresenter from "./Countries/CountriesPresenter";
-import "./styles.css";
+import React, { useState, useEffect } from 'react';
+import ThreatModelPresenter from './ThreatModels/ThreatModelPresenter';
+import CountriesPresenter from './Countries/CountriesPresenter';
+import './styles.css';
 
 export default function App() {
   const threatModelPresenter = new ThreatModelPresenter();
   const countryPresenter = new CountriesPresenter();
 
   const [localThreatModel, copyViewModelToLocalThreatModel] = useState({
-    name: "",
+    name: '',
     threatFactors: [],
-    threatRatings: []
+    threatRatings: [],
   });
 
   const [localCountries, copyViewModelToLocalCountries] = useState([]);
 
   useEffect(() => {
     async function load() {
-      await threatModelPresenter.load((viewModel) => {
+      await threatModelPresenter.load(viewModel => {
         copyViewModelToLocalThreatModel(viewModel);
       });
     }
@@ -34,30 +34,32 @@ export default function App() {
 
   return (
     <>
-      <div className="App">
+      <div className='App'>
         <h1>{localThreatModel.pageTitle}</h1>
       </div>
 
-      <div className="Model">
+      <div className='Model'>
         <h2>Threat Model: {localThreatModel.name}</h2>
         <h3>Rating Levels</h3>
         <ul>
-          {localThreatModel.threatRatings.map((rating) => (
-            <li style={{ color: rating.colour }}>{rating.name}</li>
+          {localThreatModel.threatRatings.map((rating, i) => (
+            <li key={i} style={{ color: rating.colour }}>
+              {rating.name}
+            </li>
           ))}
         </ul>
         <h3>Risk Factors</h3>
         <ul>
-          {localThreatModel.threatFactors.map((factor) => (
-            <li>{factor}</li>
+          {localThreatModel.threatFactors.map((factor, i) => (
+            <li key={i}>{factor}</li>
           ))}
         </ul>
       </div>
 
-      <div className="Countries">
+      <div className='Countries'>
         <h2>Country List</h2>
         <ul>
-          {localCountries.map((country) => (
+          {localCountries.map(country => (
             <li key={country.countryCode}>{country.countryName}</li>
           ))}
         </ul>
