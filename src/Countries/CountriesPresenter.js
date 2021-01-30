@@ -1,4 +1,4 @@
-import countriesRepository from "../Countries/CountryRepository";
+import countriesRepository from "./CountryRepository";
 import { computed } from "mobx";
 
 export default class CountriesPresenter {

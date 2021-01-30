@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ThreatModelPresenter from "../ThreatModels/ThreatModelPresenter";
-import CountriesPresenter from "../Countries/CountriesPresenter";
+import CountriesPresenter from "./Countries/CountriesPresenter";
 import "./styles.css";
 
 export default function App() {

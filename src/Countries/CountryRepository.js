@@ -1,4 +1,4 @@
-import httpGateway from "../shared/HttpGateway";
+import httpGateway from "../../shared/HttpGateway";
 import { observable, action } from "mobx";
 
 class CountriesRepository {
