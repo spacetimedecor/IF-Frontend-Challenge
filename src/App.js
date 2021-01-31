@@ -1,73 +1,110 @@
 import React, { useState, useEffect } from 'react';
 import ThreatModelPresenter from './ThreatModels/ThreatModelPresenter';
 import CountriesPresenter from './Countries/CountriesPresenter';
+import AssessmentPresenter from './Assessment/AssessmentPresenter';
 import './styles.css';
+import CountryAssessment from './Components/CountryAssessment';
 
 export default function App() {
   const threatModelPresenter = new ThreatModelPresenter();
   const countryPresenter = new CountriesPresenter();
+  const assessmentPresenter = new AssessmentPresenter();
 
+  const [localCountries, copyViewModelToLocalCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
   const [localThreatModel, copyViewModelToLocalThreatModel] = useState({
     name: '',
     threatFactors: [],
     threatRatings: [],
   });
-
-  const [localCountries, copyViewModelToLocalCountries] = useState([]);
+  const [currentAssessment, copyViewModelToLocalAssessment] = useState();
 
   useEffect(() => {
-    async function load() {
-      await threatModelPresenter.load(viewModel => {
-        copyViewModelToLocalThreatModel(viewModel);
-      });
+    async function loadThreats() {
+      await threatModelPresenter.loadThreatModels();
+      copyViewModelToLocalThreatModel(threatModelPresenter.threatModels);
     }
-    load();
-  }, []);
 
-  useEffect(() => {
-    async function load2() {
+    async function loadCountries() {
       await countryPresenter.loadCountries();
       copyViewModelToLocalCountries(countryPresenter.countries);
+      setSelectedCountry(countryPresenter.countries[0].countryCode);
     }
-    load2();
+
+    Promise.all([loadThreats(), loadCountries()])
+      .then(() => {
+        console.info('Loaded data.');
+      })
+      .catch(e => {
+        console.error(`Loading data failed with error: ${e}`);
+      });
   }, []);
+
+  const changeCountry = event => {
+    setSelectedCountry(event.target.value);
+  };
+
+  useEffect(() => {
+    async function loadAssessment() {
+      console.log(`Loading country assessment: ${selectedCountry}`);
+      await assessmentPresenter.loadAssessmentModel(selectedCountry);
+      copyViewModelToLocalAssessment(assessmentPresenter.assessmentModel);
+    }
+    loadAssessment()
+      .then(() => {
+        console.log(`Loaded threat assessment`);
+      })
+      .catch(e => {
+        console.log(`Couldn't Load threat assessment with error: ${e}`);
+      });
+  }, [selectedCountry]);
 
   return (
     <>
-      <div className='App'>
+      <div id='App'>
         <h1>{localThreatModel.pageTitle}</h1>
       </div>
 
-      <div className='Model'>
-        <h2>Threat Model: {localThreatModel.name}</h2>
-        <h3>Rating Levels</h3>
-        <ul>
-          {localThreatModel.threatRatings.map((rating, i) => (
-            <li key={i} style={{ color: rating.colour }}>
-              {rating.name}
-            </li>
-          ))}
-        </ul>
-        <h3>Risk Factors</h3>
-        <ul>
-          {localThreatModel.threatFactors.map((factor, i) => (
-            <li key={i}>{factor}</li>
-          ))}
-        </ul>
-      </div>
+      {/*<div className='Model'>*/}
+      {/*  <h2>Threat Model: {localThreatModel.name}</h2>*/}
+      {/*  <h3>Rating Levels</h3>*/}
+      {/*  <ul>*/}
+      {/*    {localThreatModel.threatRatings.map((rating, i) => (*/}
+      {/*      <li key={`${rating.id}-${i}`} style={{ color: rating.colour }}>*/}
+      {/*        {rating.name}*/}
+      {/*      </li>*/}
+      {/*    ))}*/}
+      {/*  </ul>*/}
+      {/*  <h3>Risk Factors</h3>*/}
+      {/*  <ul>*/}
+      {/*    {localThreatModel.threatFactors.map((factor, i) => (*/}
+      {/*      <li key={`${factor.id}-${i}`}>{factor}</li>*/}
+      {/*    ))}*/}
+      {/*  </ul>*/}
+      {/*</div>*/}
 
-      <div className='Countries'>
+      <div id='Countries'>
         <h2>Country List</h2>
-        <ul>
+        <select name='countries' id='countries' value={selectedCountry} onChange={changeCountry}>
           {localCountries.map(country => (
-            <li key={country.countryCode}>{country.countryName}</li>
+            <option key={country.countryCode} value={country.countryCode}>
+              {country.countryName}
+            </option>
           ))}
-        </ul>
+        </select>
       </div>
 
-      {/* <div className="CountryAssessment">
-        <h2>CountryAssessment</h2>
-      </div> */}
+      <div>
+        <h2>Country Assessment</h2>
+        {currentAssessment && (
+          <CountryAssessment
+            id={currentAssessment.id}
+            modelId={currentAssessment.modelId}
+            rating={currentAssessment.rating}
+            riskFactors={currentAssessment.riskFactors}
+          />
+        )}
+      </div>
     </>
   );
 }

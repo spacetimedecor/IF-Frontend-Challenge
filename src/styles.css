@@ -1,4 +1,103 @@
-.App {
-  font-family: sans-serif;
+* {
+  box-sizing: border-box;
+}
+
+#App {
+  font-family: helvetica, sans-serif;
   text-align: center;
+}
+
+#CountryAssessmentWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#CountryAssessment {
+  width: 16rem;
+  height: 20rem;
+  background-color: #1e2e3b;
+  color: #fff;
+}
+
+#CountryAssessmentHeader {
+  width: 100%;
+  height: 25%;
+  background-color: #503540;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+}
+
+.CountryAssessmentHeaderSubtitle,
+.CountryAssessmentHeaderTitle,
+.CountryAssessmentThreatLevelName,
+.CountryAssessmentThreatRatingName {
+  margin: 0;
+  font-family: helvetica, sans-serif;
+  line-height: 0.85;
+  letter-spacing: 1px;
+}
+
+.CountryAssessmentHeaderSubtitle {
+  font-weight: lighter;
+
+}
+
+.CountryAssessmentHeaderTitle {
+  letter-spacing: 3px;
+}
+
+#CountryAssessmentBody {
+  width: 100%;
+  height: 75%;
+  /*background-color: #1e2e3b;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 1.25rem;
+}
+
+.ThreatLevel {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.CountryAssessmentThreatLevelDetails {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.CountryAssessmentThreatLevelName,
+.CountryAssessmentThreatRatingName {
+  height: 100%;
+}
+
+.CountryAssessmentThreatLevelName {
+  font-size: x-small;
+  font-weight: lighter;
+}
+
+.CountryAssessmentThreatRatingName {
+  font-size: 8px;
+  font-weight: lighter;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0.5;
+}
+
+.CountryAssessmentThreatBarHolder,
+.CountryAssessmentThreatBar {
+  height: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.CountryAssessmentThreatBarHolder {
+  background-color: #051e29;
 }

@@ -1,17 +1,20 @@
 import threatModelRepository from './ThreatModelRepository';
+import { computed } from 'mobx';
 
 export default class ThreatModelPresenter {
-  load = async callback => {
-    await threatModelRepository.getModel(threatModelPm => {
-      const threatModelVm = {
-        name: threatModelPm.name,
-        threatRatings: threatModelPm.ratings.map(rating => {
-          return { name: rating.name, colour: rating.colour };
-        }),
-        threatFactors: threatModelPm.riskFactors.map(factor => factor.name),
-        pageTitle: 'Country Threat Analysis',
-      };
-      callback(threatModelVm);
-    });
+  @computed get threatModels() {
+    const programmersModel = threatModelRepository.threatModel;
+    return {
+      name: programmersModel.name,
+      threatRatings: programmersModel.ratings.map(rating => {
+        return { name: rating.name, colour: rating.colour };
+      }),
+      threatFactors: programmersModel.riskFactors.map(factor => factor.name),
+      pageTitle: 'Country Threat Analysis',
+    };
+  }
+
+  loadThreatModels = async () => {
+    await threatModelRepository.loadModel();
   };
 }

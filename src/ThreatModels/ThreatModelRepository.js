@@ -1,23 +1,19 @@
 import httpGateway from '../shared/HttpGateway';
-import Observable from '../shared/Observable';
+import { observable, action } from 'mobx';
 
 class ThreatModelRepository {
-  programmersModel = new Observable({
+  @observable
+  threatModel = {
     name: '',
     ratings: [],
     riskFactors: [],
-  });
-
-  getModel = async callback => {
-    this.programmersModel.subscribe(callback);
-    await this.loadModel();
-    this.programmersModel.notify();
   };
 
+  @action
   loadModel = async () => {
     const modelDto = await httpGateway.get('threatModel');
 
-    this.programmersModel.value = {
+    this.threatModel = {
       name: modelDto.threatModel.name,
       riskFactors: modelDto.threatModel.riskFactors,
       ratings: modelDto.threatModel.ratings,
