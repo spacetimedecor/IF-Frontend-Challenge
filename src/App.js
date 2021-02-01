@@ -65,23 +65,23 @@ export default function App() {
         <h1>{localThreatModel.pageTitle}</h1>
       </div>
 
-      {/*<div className='Model'>*/}
-      {/*  <h2>Threat Model: {localThreatModel.name}</h2>*/}
-      {/*  <h3>Rating Levels</h3>*/}
-      {/*  <ul>*/}
-      {/*    {localThreatModel.threatRatings.map((rating, i) => (*/}
-      {/*      <li key={`${rating.id}-${i}`} style={{ color: rating.colour }}>*/}
-      {/*        {rating.name}*/}
-      {/*      </li>*/}
-      {/*    ))}*/}
-      {/*  </ul>*/}
-      {/*  <h3>Risk Factors</h3>*/}
-      {/*  <ul>*/}
-      {/*    {localThreatModel.threatFactors.map((factor, i) => (*/}
-      {/*      <li key={`${factor.id}-${i}`}>{factor}</li>*/}
-      {/*    ))}*/}
-      {/*  </ul>*/}
-      {/*</div>*/}
+      <div className='Model'>
+        <h2>Threat Model: {localThreatModel.name}</h2>
+        <h3>Rating Levels</h3>
+        <ul>
+          {localThreatModel.threatRatings.map((rating, i) => (
+            <li key={`${rating.id}-${i}`} style={{ color: rating.colour }}>
+              {rating.name}
+            </li>
+          ))}
+        </ul>
+        <h3>Risk Factors</h3>
+        <ul>
+          {localThreatModel.threatFactors.map((factor, i) => (
+            <li key={`${factor.id}-${i}`}>{factor}</li>
+          ))}
+        </ul>
+      </div>
 
       <div id='Countries'>
         <h2>Country List</h2>

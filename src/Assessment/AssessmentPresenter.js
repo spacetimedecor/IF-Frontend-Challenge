@@ -9,12 +9,12 @@ export default class AssessmentPresenter {
 
     const overallRating = threatModel.ratings.find(rating => rating.id === assessmentModel.ratingId);
 
-    const result = {
+    return {
       id: assessmentModel.id,
       modelId: assessmentModel.modelId,
       rating: {
         ...overallRating,
-        name: overallRating.name.toUpperCase(),
+        name: overallRating ? overallRating.name.toUpperCase() : '',
       },
       riskFactors: assessmentModel.riskFactors.map(riskFactor => {
         const thisRating = threatModel.ratings.find(rating => rating.id === riskFactor.ratingId);
@@ -23,13 +23,11 @@ export default class AssessmentPresenter {
           ...riskFactor,
           rating: {
             ...thisRating,
-            ranking: 5 - thisRating.ranking,
+            ranking: thisRating ? 5 - thisRating.ranking : 0,
           },
         };
       }),
     };
-
-    return result;
   }
 
   loadAssessmentModel = async countryCode => {
