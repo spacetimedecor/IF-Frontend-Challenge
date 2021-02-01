@@ -2,3 +2,4 @@
 .prettierrc
 .prettierignore
 ./node_modules
+src/.DS_Store
