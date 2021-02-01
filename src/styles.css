@@ -99,7 +99,7 @@
 }
 
 .CountryAssessmentThreatBar {
-  transition: width 2s;
+  transition: width 2s, background-color 2s;
 }
 
 .CountryAssessmentThreatBarHolder {
