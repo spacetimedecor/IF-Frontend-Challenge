@@ -98,6 +98,10 @@
   overflow: hidden;
 }
 
+.CountryAssessmentThreatBar {
+  transition: width 2s;
+}
+
 .CountryAssessmentThreatBarHolder {
   background-color: #051e29;
 }
